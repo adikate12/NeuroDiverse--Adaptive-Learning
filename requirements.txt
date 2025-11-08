@@ -1,0 +1,9 @@
+flask
+opencv-python
+numpy
+scipy
+imutils
+pygame
+dlib
+requests
+beautifulsoup4
