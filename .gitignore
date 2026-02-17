@@ -16,9 +16,13 @@ venv/
 .DS_Store
 Thumbs.db
 
-# PyCharm
-.idea/
-
 # Build
 *.log
 *.bak
+
+# Environment file
+.env
+
+# IDE
+.idea/
+.vscode/

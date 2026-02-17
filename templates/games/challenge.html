@@ -1,0 +1,180 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Focus Challenge ⚡</title>
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #fff 0%, #e2edff 100%);
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+    #word {
+      font-size: 64px;
+      font-weight: 600;
+      margin: 30px 0;
+      transition: 0.2s ease;
+    }
+    .colors {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .color-btn {
+      width: 100px;
+      height: 45px;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    .color-btn:active { transform: scale(0.95); }
+    #timer {
+      font-size: 18px;
+      color: #444;
+      margin-top: 20px;
+    }
+    #returnBtn {
+      display: none;
+      margin-top: 30px;
+      background: linear-gradient(135deg, #3b9dfc, #1e7adc);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      transition: 0.3s ease;
+    }
+    #returnBtn:hover { transform: scale(1.05); }
+  </style>
+</head>
+<body>
+  <h1>🎯 Focus Challenge</h1>
+  <div id="word">BLUE</div>
+  <div class="colors" id="buttons"></div>
+  <div id="timer">Time Left: 30 s</div>
+  <button onclick="parent.closeGame()">Return to Lesson</button>
+
+  <script src="{{ url_for('static', filename='js/challenge.js') }}"></script>
+  
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Focus Challenge ⚡</title>
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #fff 0%, #e2edff 100%);
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    #word {
+      font-size: 64px;
+      font-weight: 600;
+      margin: 30px 0;
+      transition: 0.2s ease;
+    }
+
+    .colors {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .color-btn {
+      width: 100px;
+      height: 45px;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .color-btn:active {
+      transform: scale(0.95);
+    }
+
+    #timer {
+      font-size: 18px;
+      color: #444;
+      margin-top: 20px;
+    }
+
+    #returnBtn {
+      display: none;
+      margin-top: 30px;
+      background: linear-gradient(135deg, #3b9dfc, #1e7adc);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      transition: 0.3s ease;
+    }
+
+    #returnBtn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🎯 Focus Challenge</h1>
+
+  <div id="word">READY</div>
+  <div class="colors" id="buttons"></div>
+  <div id="timer">Time Left: 30 s</div>
+
+  <!-- ✅ FIXED BUTTON -->
+  <button id="returnBtn">Return to Lesson</button>
+
+  <script src="{{ url_for('static', filename='js/challenge.js') }}"></script>
+</body>
+</html>

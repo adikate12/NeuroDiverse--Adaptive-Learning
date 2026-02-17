@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NeuroDiverse – Login</title>
+
+  <style>
+    :root {
+      --purple: #6d28d9;
+      --dark-purple: #4c1d95;
+      --white: #ffffff;
+      --gray: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f5f3ff, #ffffff);
+    }
+
+    .card {
+      width: 360px;
+      background: var(--white);
+      padding: 32px 28px;
+      border-radius: 18px;
+      box-shadow: 0 25px 50px rgba(76, 29, 149, 0.15);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--dark-purple);
+      margin-bottom: 20px;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 14px;
+      border-radius: 10px;
+      border: 1.5px solid #ddd;
+      font-size: 0.95rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, var(--purple), #8b5cf6);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .note {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h2>🧠 NeuroDiverse Login</h2>
+
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="note">
+      New user? <a href="{{ url_for('auth.register') }}">Create account</a>
+    </div>
+  </div>
+
+</body>
+</html>

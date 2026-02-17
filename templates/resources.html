@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - NeuroDiverse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .main-header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            color: #5568d3;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: #a0aec0;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            background: #f7fafc;
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .nav-menu li a:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .nav-menu li a.active {
+            background: #e0e7ff;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-focus {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+        }
+
+        .btn-focus:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #667eea;
+        }
+
+        /* Main Content */
+        .content-wrapper {
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 35px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .page-header h1 {
+            color: #667eea;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 28px;
+            background: rgba(255, 255, 255, 0.98);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #718096;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Community Section */
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .person-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .person-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .person-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .person-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .person-info h3 {
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .person-role {
+            background: #f0f9ff;
+            color: #667eea;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .person-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 11px;
+            color: #718096;
+            margin-top: 2px;
+        }
+
+        .person-bio {
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .person-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: #fff7ed;
+            color: #f59e0b;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .connect-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .connect-btn.connected {
+            background: #10b981;
+        }
+
+        /* Resources Grid */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .resource-icon-header {
+            height: 120px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 56px;
+        }
+
+        .resource-content {
+            padding: 25px;
+        }
+
+        .resource-content h3 {
+            color: #2d3748;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .resource-content p {
+            color: #718096;
+            line-height: 1.6;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .resource-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .meta-badge {
+            background: #f0f9ff;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .access-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .access-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer Styles */
+        .main-footer {
+            background: rgba(255, 255, 255, 0.98);
+            margin-top: 40px;
+            padding: 30px 0 20px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 35px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #718096;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav {
+                position: absolute;
+                top: 95px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                background: transparent;
+                padding: 0;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu li a {
+                width: 100%;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 20px;
+            }
+
+            .logo-text h1 {
+                font-size: 18px;
+            }
+
+            .content-wrapper {
+                padding: 20px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .community-grid,
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-navigation {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon">🧠</div>
+                <div class="logo-text">
+                    <h1>NeuroDiverse</h1>
+                    <p>Adaptive Learning Platform</p>
+                </div>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/index">Dashboard</a></li>
+                    <li><a href="/lessons">My Lessons</a></li>
+                    <li><a href="resources.html" class="active">Resources</a></li>
+                    <li><a href="/progress">Progress</a></li>
+                    <li><a href="/profile">Profile</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="btn btn-focus" onclick="showFocusBreak()">🧘 Focus Break</button>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>📚 Learning Resources & Community</h1>
+            <p>Connect with peers, access study materials, and grow together</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="showTab('community')">👥 Community</button>
+            <button class="tab-btn" onclick="showTab('materials')">📖 Study Materials</button>
+            <button class="tab-btn" onclick="showTab('tools')">🛠️ Learning Tools</button>
+            <button class="tab-btn" onclick="showTab('support')">💬 Support Groups</button>
+        </div>
+
+        <!-- Community Tab -->
+        <div class="tab-content active" id="community">
+            <h2 style="color: white; font-size: 24px; margin-bottom: 20px;">🌟 Connect With Others</h2>
+            <div class="community-grid" id="communityGrid"></div>
+        </div>
+
+        <!-- Study Materials Tab -->
+        <div class="tab-content" id="materials">
+            <h2 style="color: white; font-size: 24px; margin-bottom: 20px;">📚 Study Materials</h2>
+            <div class="resources-grid" id="materialsGrid"></div>
+        </div>
+
+        <!-- Learning Tools Tab -->
+        <div class="tab-content" id="tools">
+            <h2 style="color: white; font-size: 24px; margin-bottom: 20px;">🛠️ Learning Tools</h2>
+            <div class="resources-grid" id="toolsGrid"></div>
+        </div>
+
+        <!-- Support Groups Tab -->
+        <div class="tab-content" id="support">
+            <h2 style="color: white; font-size: 24px; margin-bottom: 20px;">💬 Support Groups</h2>
+            <div class="resources-grid" id="supportGrid"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NeuroDiverse Learning</h3>
+                    <p>Empowering every student to learn at their own pace with adaptive technology designed for diverse minds and learning styles.</p>
+                    <div class="social-icons">
+                        <div class="social-icon" title="Facebook">📘</div>
+                        <div class="social-icon" title="Twitter">🐦</div>
+                        <div class="social-icon" title="Instagram">📷</div>
+                        <div class="social-icon" title="YouTube">📺</div>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="lessons.html">My Lessons</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                        <li><a href="progress.html">Progress</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                        <li><a href="#">Learning Tips</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2024 NeuroDiverse Adaptive Learning Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Community Data
+        const communityMembers = [
+            {
+                name: "Sarah Johnson",
+                role: "Teacher",
+                avatar: "👩‍🏫",
+                bio: "Math teacher specializing in adaptive learning for ADHD students. 10+ years experience.",
+                lessons: 156,
+                students: 89,
+                rating: 4.9,
+                tags: ["Math", "ADHD", "Visual Learning"]
+            },
+            {
+                name: "Michael Chen",
+                role: "Study Buddy",
+                avatar: "👨‍🎓",
+                bio: "Grade 10 student, love coding and science. Looking for study partners!",
+                lessons: 42,
+                students: 0,
+                rating: 4.7,
+                tags: ["Science", "Coding", "Group Study"]
+            },
+            {
+                name: "Dr. Emily Roberts",
+                role: "Learning Specialist",
+                avatar: "👩‍⚕️",
+                bio: "Educational psychologist helping students with dyslexia and learning differences.",
+                lessons: 203,
+                students: 145,
+                rating: 5.0,
+                tags: ["Dyslexia", "Psychology", "Strategy"]
+            },
+            {
+                name: "Alex Rivera",
+                role: "Student",
+                avatar: "🧑‍🎓",
+                bio: "History buff and visual learner. Always up for collaborative projects!",
+                lessons: 28,
+                students: 0,
+                rating: 4.5,
+                tags: ["History", "Art", "Projects"]
+            },
+            {
+                name: "Prof. David Kim",
+                role: "Teacher",
+                avatar: "👨‍🏫",
+                bio: "Science teacher with focus on hands-on learning and experiments.",
+                lessons: 178,
+                students: 112,
+                rating: 4.8,
+                tags: ["Science", "Experiments", "Interactive"]
+            },
+            {
+                name: "Jessica Martinez",
+                role: "Peer Mentor",
+                avatar: "👧",
+                bio: "Grade 12 student mentoring younger students. Love English and writing!",
+                lessons: 67,
+                students: 23,
+                rating: 4.9,
+                tags: ["English", "Writing", "Mentoring"]
+            }
+        ];
+
+        // Study Materials Data
+        const studyMaterials = [
+            {
+                title: "Visual Study Guides",
+                icon: "📊",
+                description: "Colorful, easy-to-follow study guides with diagrams and mind maps for all subjects.",
+                type: "PDF Collection",
+                items: 45,
+                difficulty: "All Levels"
+            },
+            {
+                title: "Audio Lessons Library",
+                icon: "🎧",
+                description: "Listen and learn with our extensive audio lesson collection. Perfect for auditory learners.",
+                type: "Audio",
+                items: 120,
+                difficulty: "All Levels"
+            },
+            {
+                title: "Interactive Flashcards",
+                icon: "🃏",
+                description: "Digital flashcards with spaced repetition for better memory retention.",
+                type: "Interactive",
+                items: 500,
+                difficulty: "All Levels"
+            },
+            {
+                title: "Video Tutorials",
+                icon: "🎥",
+                description: "Step-by-step video tutorials breaking down complex topics into bite-sized lessons.",
+                type: "Video",
+                items: 89,
+                difficulty: "Beginner-Advanced"
+            },
+            {
+                title: "Practice Worksheets",
+                icon: "📝",
+                description: "Printable worksheets with answer keys for self-paced practice and review.",
+                type: "PDF",
+                items: 200,
+                difficulty: "All Levels"
+            },
+            {
+                title: "Mind Map Templates",
+                icon: "🗺️",
+                description: "Pre-made mind map templates to organize thoughts and study materials visually.",
+                type: "Templates",
+                items: 35,
+                difficulty: "All Levels"
+            }
+        ];
+
+        // Learning Tools Data
+        const learningTools = [
+            {
+                title: "Pomodoro Timer",
+                icon: "⏰",
+                description: "Focus timer with customizable work/break intervals. Helps manage time and maintain concentration.",
+                type: "Tool",
+                items: "Web App",
+                difficulty: "Easy to Use"
+            },
+            {
+                title: "Note-Taking Assistant",
+                icon: "✍️",
+                description: "AI-powered note organizer that structures your thoughts and highlights key points.",
+                type: "Tool",
+                items: "Web App",
+                difficulty: "Easy to Use"
+            },
+            {
+                title: "Focus Music Player",
+                icon: "🎵",
+                description: "Curated playlists scientifically designed to improve focus and concentration.",
+                type: "Audio",
+                items: "50+ Playlists",
+                difficulty: "Easy to Use"
+            },
+            {
+                title: "Progress Tracker",
+                icon: "📈",
+                description: "Visual progress tracking with goals, milestones, and achievement badges.",
+                type: "Tool",
+                items: "Web App",
+                difficulty: "Easy to Use"
+            },
+            {
+                title: "Reading Assistant",
+                icon: "📖",
+                description: "Text-to-speech tool with adjustable speed and highlighting for better reading comprehension.",
+                type: "Tool",
+                items: "Web App",
+                difficulty: "Easy to Use"
+            },
+            {
+                title: "Study Planner",
+                icon: "📅",
+                description: "Smart calendar that adapts to your learning style and optimizes study schedules.",
+                type: "Tool",
+                items: "Web App",
+                difficulty: "Easy to Use"
+            }
+        ];
+
+        // Support Groups Data
+        const supportGroups = [
+            {
+                title: "ADHD Study Circle",
+                icon: "🎯",
+                description: "Weekly video meetups for students with ADHD to share strategies and support each other.",
+                type: "Video Group",
+                items: "45 Members",
+                difficulty: "Open to All"
+            },
+            {
+                title: "Dyslexia Support Network",
+                icon: "📚",
+                description: "Community forum and monthly workshops for students with dyslexia and their families.",
+                type: "Forum + Events",
+                items: "120 Members",
+                difficulty: "Open to All"
+            },
+            {
+                title: "Anxiety & Learning",
+                icon: "🌸",
+                description: "Safe space to discuss anxiety management techniques while maintaining academic progress.",
+                type: "Discussion Group",
+                items: "78 Members",
+                difficulty: "Moderated"
+            },
+            {
+                title: "Parent Support Hub",
+                icon: "👨‍👩‍👧‍👦",
+                description: "Resources and community for parents supporting neurodiverse learners.",
+                type: "Parent Group",
+                items: "156 Members",
+                difficulty: "Parents Only"
+            },
+            {
+                title: "Study Skills Workshop",
+                icon: "💡",
+                description: "Bi-weekly workshops teaching effective study techniques for diverse learning styles.",
+                type: "Workshop",
+                items: "New Sessions",
+                difficulty: "All Levels"
+            },
+            {
+                title: "Peer Tutoring Exchange",
+                icon: "🤝",
+                description: "Connect with peer tutors or offer your skills to help others. Everyone teaches, everyone learns!",
+                type: "Peer Network",
+                items: "89 Active",
+                difficulty: "Open to All"
+            }
+        ];
+
+        // Render Community Members
+        function renderCommunity() {
+            const grid = document.getElementById('communityGrid');
+            grid.innerHTML = communityMembers.map(member => `
+                <div class="person-card">
+                    <div class="person-header">
+                        <div class="person-avatar">${member.avatar}</div>
+                        <div class="person-info">
+                            <h3>${member.name}</h3>
+                            <span class="person-role">${member.role}</span>
+                        </div>
+                    </div>
+                    <div class="person-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">${member.lessons}</span>
+                            <span class="stat-label">Lessons</span>

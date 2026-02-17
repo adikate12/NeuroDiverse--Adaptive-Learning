@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - NeuroDiverse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            color: #5568d3;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: #a0aec0;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            background: #f7fafc;
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .nav-menu li a:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .nav-menu li a.active {
+            background: #e0e7ff;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-focus {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+        }
+
+        .btn-focus:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #667eea;
+        }
+
+        /* Main Content */
+        .content-wrapper {
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 35px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .page-header h1 {
+            color: #667eea;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        /* Profile Section */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .profile-level {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        .profile-info {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .info-section {
+            margin-bottom: 25px;
+        }
+
+        .info-section h3 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .info-label {
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .edit-profile-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .edit-profile-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Level Assessment Game */
+        .game-section {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            margin-bottom: 30px;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .game-header h2 {
+            color: #667eea;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .game-header p {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .question-card {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .question-card.active {
+            border-color: #667eea;
+            background: white;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            color: #2d3748;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: #2d3748;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            border-color: #667eea;
+            background: #f0f9ff;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .option-btn.correct {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .option-btn.incorrect {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-game {
+            padding: 14px 40px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-next {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-next:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .result-score {
+            font-size: 64px;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-level {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .result-message {
+            font-size: 18px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .progress-bar-container {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: white;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Achievements Section */
+        .achievements-section {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .achievements-section h2 {
+            color: #667eea;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .achievement-badge {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .achievement-badge:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+        }
+
+        .achievement-badge.earned {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-color: #f59e0b;
+        }
+
+        .achievement-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .achievement-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .achievement-badge.locked {
+            opacity: 0.5;
+        }
+
+        /* Footer */
+        .main-footer {
+            background: rgba(255, 255, 255, 0.98);
+            margin-top: 40px;
+            padding: 30px 0 20px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 35px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #718096;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                position: absolute;
+                top: 95px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                background: transparent;
+                padding: 0;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 20px;
+            }
+
+            .content-wrapper {
+                padding: 20px;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .achievements-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon">🧠</div>
+                <div class="logo-text">
+                    <h1>NeuroDiverse</h1>
+                    <p>Adaptive Learning Platform</p>
+                </div>
+            </div>
+            
+            <nav>
+    <ul class="nav-menu" id="navMenu">
+        <li><a href="/index">Dashboard</a></li>     
+        <li><a href="/lessons">My Lessons</a></li>
+        <li><a href="/resources">Resources</a></li>
+        <li><a href="/progress">Progress</a></li>
+        <li><a href="profile.html" class="active">Profile</a></li>
+    </ul>
+</nav> 
+
+            <div class="header-actions">
+                <button class="btn btn-focus" onclick="showFocusBreak()">🧘 Focus Break</button>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>👤 My Profile</h1>
+            <p>View your progress, take level assessments, and manage your learning preferences</p>
+        </div>
+
+        <!-- Profile Grid -->
+        <div class="profile-grid">
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <div class="profile-avatar">👦</div>
+                <div class="profile-name">Alex Johnson</div>
+                <div class="profile-level">Level 3 - Intermediate 🌟</div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Lessons</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5🔥</div>
+                        <div class="stat-label">Day Streak</div>
+                    </div>
+                </div>
+
+                <button class="edit-profile-btn" onclick="editProfile()">✏️ Edit Profile</button>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="profile-info">
+                <div class="info-section">
+                    <h3>📋 Personal Information</h3>
+                    <div class="info-row">
+                        <span class="info-label">Age</span>
+                        <span class="info-value">12 years</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Grade</span>
+                        <span class="info-value">7th Grade</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Learning Style</span>
+                        <span class="info-value">Visual & Interactive</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Member Since</span>
+                        <span class="info-value">January 2024</span>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3>🎯 Learning Preferences</h3>
+                    <div class="info-row">
+                        <span class="info-label">Preferred Time</span>
+                        <span class="info-value">Afternoon</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Session Length</span>
+                        <span class="info-value">25 minutes</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Break Frequency</span>
+                        <span class="info-value">Every 20 min</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Difficulty</span>
+                        <span class="info-value">Adaptive</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level Assessment Game -->
+        <div class="game-section">
+            <div class="game-header">
+                <h2>🎮 Level Assessment Quiz</h2>
+                <p>Complete this fun quiz to determine your current learning level and unlock personalized content!</p>
+            </div>
+
+            <div class="game-container" id="gameContainer">
+                <div class="game-controls">
+                    <button class="btn-game btn-start" onclick="startQuiz()">🚀 Start Assessment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="achievements-section">
+            <h2>🏆 Achievements & Badges</h2>
+            <div class="achievements-grid">
+                <div class="achievement-badge earned">
+                    <div class="achievement-icon">🌟</div>
+                    <div class="achievement-name">First Lesson</div>
+                </div>
+                <div class="achievement-badge earned">
+                    <div class="achievement-icon">🔥</div>
+                    <div class="achievement-name">5 Day Streak</div>
+                </div>
+                <div class="achievement-badge earned">
+                    <div class="achievement-icon">📚</div>
+                    <div class="achievement-name">10 Lessons Done</div>
+                </div>
+                <div class="achievement-badge locked">
+                    <div class="achievement-icon">💎</div>
+                    <div class="achievement-name">20 Lessons</div>
+                </div>
+                <div class="achievement-badge locked">
+                    <div class="achievement-icon">🏅</div>
+                    <div class="achievement-name">Perfect Score</div>
+                </div>
+                <div class="achievement-badge locked">
+                    <div class="achievement-icon">🎯</div>
+                    <div class="achievement-name">30 Day Streak</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NeuroDiverse Learning</h3>
+                    <p>Empowering every student to learn at their own pace with adaptive technology designed for diverse minds and learning styles.</p>
+                    <div class="social-icons">
+                        <div class="social-icon" title="Facebook">📘</div>
+                        <div class="social-icon" title="Twitter">🐦</div>
+                        <div class="social-icon" title="Instagram">📷</div>
+                        <div class="social-icon" title="YouTube">📺</div>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="lessons.html">My Lessons</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                        <li><a href="progress.html">Progress</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                        <li><a href="#">Learning Tips</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2024 NeuroDiverse Adaptive Learning Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "What is 5 + 7?",
+                options: ["10", "11", "12", "13"],
+                correct: 2,
+                difficulty: 1
+            },
+            {
+                question: "Which shape has 3 sides?",
+                options: ["Square", "Triangle", "Circle", "Rectangle"],
+                correct: 1,
+                difficulty: 1
+            },
+            {
+                question: "What is 15 - 8?",
+                options: ["5", "6", "7", "8"],
+                correct: 2,
+                difficulty: 1
+            },
+            {
+                question: "If you have 4 apples and get 3 more, how many do you have?",
+                options: ["6", "7", "8", "9"],
+                correct: 1,
+                difficulty: 2
+            },
+            {
+                question: "What is 6 × 3?",
+                options: ["15", "16", "18", "20"],
+                correct: 2,
+                difficulty: 2
+            },
+            {
+                question: "Which number comes next: 2, 4, 6, 8, __?",
+                options: ["9", "10", "11", "12"],
+                correct: 1,
+                difficulty: 2
+            },
+            {
+                question: "What is 24 ÷ 4?",
+                options: ["4", "5", "6", "7"],
+                correct: 2,
+                difficulty: 3
+            },
+            {
+                question: "If a book costs $8 and you buy 3 books, how much do you spend?",
+                options: ["$20", "$22", "$24", "$26"],
+                correct: 2,
+                difficulty: 3
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        function startQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = null;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const container = document.getElementById('gameContainer');
+            const q = questions[currentQuestion];
+            
+            container.innerHTML = `
+                <div class="question-card active">
+                    <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-grid">
+                        ${q.options.map((opt, idx) => `
+                            <button class="option-btn" onclick="selectAnswer(${idx})" id="option-${idx}">
+                                ${opt}
+                            </button>
+                        `).join('')}

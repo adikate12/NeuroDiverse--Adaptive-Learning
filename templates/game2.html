@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game 2 – Pack Your Bag</title>
+  <style>
+    * { box-sizing: border-box; font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at bottom, #0f172a, #020617);
+      color: #e5e7eb;
+    }
+    .card {
+      background: rgba(15,23,42,0.95);
+      border-radius: 18px;
+      padding: 22px 24px 26px;
+      width: 460px;
+      max-width: 95vw;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+      border: 1px solid rgba(148,163,184,0.5);
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #f9fafb;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: rgba(22,163,74,0.18);
+      color: #bbf7d0;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-bottom: 10px;
+    }
+    .box {
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(15,23,42,0.9);
+      border: 1px dashed rgba(148,163,184,0.6);
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+    .items-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .item-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(37,99,235,0.15);
+      color: #bfdbfe;
+      font-size: 0.8rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .card-item {
+      padding: 10px 8px;
+      border-radius: 12px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.6);
+      text-align: center;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease, background 0.1s ease;
+      min-height: 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #e5e7eb;
+    }
+    .card-item span {
+      font-size: 1.2rem;
+      margin-bottom: 2px;
+    }
+    .card-item.selected {
+      background: linear-gradient(135deg,#22c55e,#16a34a);
+      color: #022c22;
+      border-color: transparent;
+      box-shadow: 0 10px 20px rgba(34,197,94,0.4);
+      transform: translateY(-1px);
+    }
+    .btn-row {
+      margin-top: 14px;
+      text-align: right;
+    }
+    button {
+      border-radius: 999px;
+      padding: 9px 16px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+    }
+    button:active { transform: scale(0.97); box-shadow: none; }
+    .btn-primary {
+      background: linear-gradient(135deg,#22c55e,#16a34a);
+      color: #022c22;
+      box-shadow: 0 10px 20px rgba(34,197,94,0.4);
+    }
+    .btn-primary:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .hint {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="pill">Game 2 • Memory & Organization</div>
+  <h1>Pack Your Bag 🎒</h1>
+  <p class="subtitle" id="phaseTitle">Remember these items for class today:</p>
+
+  <!-- Phase 1: Show target items -->
+  <div class="box" id="rememberBox">
+    <div>🧠 Memorize these items:</div>
+    <div class="items-list" id="targetList"></div>
+    <div class="hint">You’ll see a mixed grid next. Select only these items.</div>
+  </div>
+
+  <!-- Phase 2: Selection grid -->
+  <div class="box hidden" id="gridBox">
+    <div>Now tap the items that belong in your school bag today.</div>
+    <div class="grid" id="itemGrid"></div>
+    <div class="hint">Tap to select / unselect. Then press “Done”.</div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" id="startOrDoneBtn">Start</button>
+  </div>
+
+<!-- Hidden form to submit results -->
+<form id="resultForm" action="{{ url_for('game2') }}" method="post">
+  <input type="hidden" name="organization" id="orgInput">
+  <input type="hidden" name="working_memory" id="wmInput">
+</form>
+
+</div>
+
+<script>
+  const PHASE_REMEMBER = 1;
+  const PHASE_SELECT = 2;
+
+  let phase = PHASE_REMEMBER;
+  const rememberDuration = 5500; // ms to show the target list
+
+  // Define items
+  const targetItems = [
+    { name: "Math Book", emoji: "📘" },
+    { name: "Notebook", emoji: "📓" },
+    { name: "Pencil Case", emoji: "✏️" },
+    { name: "Water Bottle", emoji: "🚰" }
+  ];
+
+  const distractorItems = [
+    { name: "Football", emoji: "⚽" },
+    { name: "Video Game", emoji: "🎮" },
+    { name: "Ice Cream", emoji: "🍦" },
+    { name: "Teddy Bear", emoji: "🧸" },
+    { name: "Remote", emoji: "📺" },
+    { name: "Sunglasses", emoji: "🕶️" }
+  ];
+
+  const allItems = [...targetItems, ...distractorItems];
+
+  // DOM
+  const targetListEl = document.getElementById('targetList');
+  const itemGridEl = document.getElementById('itemGrid');
+  const phaseTitleEl = document.getElementById('phaseTitle');
+  const rememberBox = document.getElementById('rememberBox');
+  const gridBox = document.getElementById('gridBox');
+  const startOrDoneBtn = document.getElementById('startOrDoneBtn');
+
+  function renderTargetList() {
+    targetListEl.innerHTML = '';
+    targetItems.forEach(it => {
+      const pill = document.createElement('div');
+      pill.className = 'item-pill';
+      pill.textContent = `${it.emoji} ${it.name}`;
+      targetListEl.appendChild(pill);
+    });
+  }
+
+  function renderGrid() {
+    itemGridEl.innerHTML = '';
+    // simple shuffled order
+    const shuffled = allItems
+      .map(x => ({ sort: Math.random(), value: x }))
+      .sort((a,b) => a.sort - b.sort)
+      .map(a => a.value);
+
+    shuffled.forEach(it => {
+      const div = document.createElement('div');
+      div.className = 'card-item';
+      div.dataset.name = it.name;
+      div.dataset.isTarget = targetItems.some(t => t.name === it.name) ? '1' : '0';
+
+      const span = document.createElement('span');
+      span.textContent = it.emoji;
+
+      const label = document.createElement('div');
+      label.textContent = it.name;
+
+      div.appendChild(span);
+      div.appendChild(label);
+
+      div.addEventListener('click', () => {
+        div.classList.toggle('selected');
+      });
+
+      itemGridEl.appendChild(div);
+    });
+  }
+
+  function startPhaseSelect() {
+    phase = PHASE_SELECT;
+    phaseTitleEl.textContent = "Pick the right items 🎯";
+    rememberBox.classList.add('hidden');
+    gridBox.classList.remove('hidden');
+    startOrDoneBtn.textContent = "Done";
+    renderGrid();
+  }
+
+  function handleStartOrDone() {
+    if (phase === PHASE_REMEMBER) {
+      // Start memory phase – just show list, then auto-switch to grid
+      startOrDoneBtn.disabled = true;
+      renderTargetList();
+      phaseTitleEl.textContent = "Remember these items 👀";
+      setTimeout(() => {
+        startOrDoneBtn.disabled = false;
+        startPhaseSelect();
+      }, rememberDuration);
+    } else if (phase === PHASE_SELECT) {
+      // Finish – compute scores and submit
+      const cards = Array.from(document.querySelectorAll('.card-item'));
+      let correctSelected = 0;
+      let wrongSelected = 0;
+
+      cards.forEach(card => {
+        const selected = card.classList.contains('selected');
+        const isTarget = card.dataset.isTarget === '1';
+
+        if (selected && isTarget) correctSelected++;
+        if (selected && !isTarget) wrongSelected++;
+      });
+
+      const totalTarget = targetItems.length;
+
+      // working memory: how many correct target items recalled
+      let wmScore = (correctSelected / totalTarget) * 100;
+
+      // organization: correct minus wrong, normalized
+      let orgRaw = (correctSelected - wrongSelected) / totalTarget;
+      orgRaw = Math.max(0, Math.min(1, orgRaw));
+      let orgScore = orgRaw * 100;
+
+      document.getElementById('wmInput').value = wmScore.toFixed(2);
+      document.getElementById('orgInput').value = orgScore.toFixed(2);
+
+      console.log('Game2 org:', orgScore, 'wm:', wmScore);
+
+      startOrDoneBtn.disabled = true;
+      startOrDoneBtn.textContent = "Loading…";
+
+      document.getElementById('resultForm').submit();
+    }
+  }
+
+  startOrDoneBtn.addEventListener('click', handleStartOrDone);
+</script>
+</body>
+</html>

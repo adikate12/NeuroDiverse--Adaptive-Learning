@@ -45,7 +45,7 @@ def fetch_lessons():
         lessons = [
             {
                 "title": "Force and Motion - 8th Grade Science",
-                "url": "https://www.youtube.com/watch?v=ur0hCdne2Ew",
+                "url": "https://www.youtube.com/watch?v=B6mi1-YoRT4",
                 "description": "Learn the basics of force, motion, and Newton’s laws."
             },
             {

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game 1 – Space Tap</title>
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #1e293b, #020617);
+      color: #e5e7eb;
+    }
+    .card {
+      background: rgba(15,23,42,0.9);
+      border-radius: 18px;
+      padding: 24px 28px 28px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+      width: 420px;
+      max-width: 90vw;
+      text-align: center;
+      border: 1px solid rgba(148,163,184,0.4);
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 1.6rem;
+      color: #f9fafb;
+    }
+    .subtitle {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-bottom: 14px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: rgba(37,99,235,0.15);
+      color: #bfdbfe;
+      margin-bottom: 12px;
+    }
+    .stimulus-area {
+      margin: 18px 0;
+      height: 140px;
+      border-radius: 16px;
+      border: 1px dashed rgba(148,163,184,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: rgba(15,23,42,0.7);
+    }
+    .rules {
+      text-align: left;
+      font-size: 0.85rem;
+      color: #d1d5db;
+      background: rgba(15,23,42,0.8);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .rules strong { color: #e5e7eb; }
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+    button {
+      border-radius: 999px;
+      padding: 10px 16px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+    }
+    button:active { transform: scale(0.97); box-shadow: none; }
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      box-shadow: 0 10px 20px rgba(37,99,235,0.45);
+    }
+    .btn-primary:disabled {
+      opacity: 0.5;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    .btn-secondary {
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      border: 1px solid rgba(148,163,184,0.6);
+    }
+    .status {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    .counter {
+      font-size: 0.8rem;
+      color: #cbd5f5;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="pill">Game 1 • Focus & Impulse Control</div>
+  <h1>Space Tap 🚀</h1>
+  <p class="subtitle">
+    TAP when you see the <strong>🚀 rocket</strong>. <br>
+    Do <strong>NOT TAP</strong> when you see the <strong>🪐 planet</strong>.
+  </p>
+
+  <div class="rules">
+    <strong>How it works:</strong><br>
+    • 25 quick rounds<br>
+    • 🚀 = Tap the button<br>
+    • 🪐 = Hands off! Don’t tap<br>
+    • Play as fast and accurate as you can ✨
+  </div>
+
+  <div class="stimulus-area" id="stimulus">Press “Start”</div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" id="tapBtn" disabled>Tap!</button>
+    <button class="btn-primary" id="startBtn">Start game</button>
+  </div>
+
+  <div class="counter" id="roundInfo">Round: 0 / 25</div>
+  <div class="status" id="statusText"></div>
+
+<!-- Hidden form to submit results -->
+<form id="resultForm" action="{{ url_for('game1') }}" method="POST">
+  <input type="hidden" name="attention" id="attentionInput">
+  <input type="hidden" name="impulse_control" id="impulseControlInput">
+</form>
+
+</div>
+
+<script>
+  const TOTAL_ROUNDS = 25;
+  const ROUND_DURATION = 1300; // ms
+
+  const stimulusEl = document.getElementById('stimulus');
+  const tapBtn = document.getElementById('tapBtn');
+  const startBtn = document.getElementById('startBtn');
+  const roundInfo = document.getElementById('roundInfo');
+  const statusText = document.getElementById('statusText');
+
+  let currentRound = 0;
+  let currentType = null; // 'GO' or 'NOGO'
+  let clickedThisRound = false;
+  let intervalId = null;
+
+  let totalGo = 0;
+  let correctGo = 0;
+  let totalNoGo = 0;
+  let falseAlarms = 0;
+
+  function resetGame() {
+    currentRound = 0;
+    currentType = null;
+    clickedThisRound = false;
+    totalGo = 0;
+    correctGo = 0;
+    totalNoGo = 0;
+    falseAlarms = 0;
+    roundInfo.textContent = `Round: 0 / ${TOTAL_ROUNDS}`;
+    stimulusEl.textContent = 'Press “Start”';
+    statusText.textContent = '';
+  }
+
+  function nextRound() {
+    if (currentRound >= TOTAL_ROUNDS) {
+      endGame();
+      return;
+    }
+
+    currentRound++;
+    clickedThisRound = false;
+    roundInfo.textContent = `Round: ${currentRound} / ${TOTAL_ROUNDS}`;
+    statusText.textContent = '';
+
+    // Choose GO 70% of the time, NOGO 30%
+    if (Math.random() < 0.7) {
+      currentType = 'GO';
+      totalGo++;
+      stimulusEl.textContent = '🚀';
+    } else {
+      currentType = 'NOGO';
+      totalNoGo++;
+      stimulusEl.textContent = '🪐';
+    }
+  }
+
+  function handleTap() {
+    if (!currentType) return;
+    if (clickedThisRound) return; // only first tap counts
+    clickedThisRound = true;
+
+    if (currentType === 'GO') {
+      correctGo++;
+      statusText.textContent = 'Nice! 🚀';
+    } else if (currentType === 'NOGO') {
+      falseAlarms++;
+      statusText.textContent = 'Oops, that was a planet 🪐';
+    }
+  }
+
+  function endGame() {
+    clearInterval(intervalId);
+    tapBtn.disabled = true;
+    startBtn.disabled = false;
+    stimulusEl.textContent = 'Done ✅';
+
+    // Avoid divide by zero
+    if (totalGo === 0) totalGo = 1;
+    if (totalNoGo === 0) totalNoGo = 1;
+
+    const attentionScore = (correctGo / totalGo) * 100;
+    let impulsivityScore = 100 - ((falseAlarms / totalNoGo) * 100);
+    impulsivityScore = Math.max(0, Math.min(100, impulsivityScore));
+
+    console.log('Game1 attention:', attentionScore, 'impulsivity:', impulsivityScore);
+
+    document.getElementById('attentionInput').value = attentionScore.toFixed(2);
+    document.getElementById('impulseControlInput').value = impulsivityScore.toFixed(2);
+
+    setTimeout(() => {
+      document.getElementById('resultForm').submit();
+    }, 800);
+
+  }
+
+  startBtn.addEventListener('click', () => {
+    resetGame();
+    startBtn.disabled = true;
+    tapBtn.disabled = false;
+
+    // start loop
+    nextRound();
+    intervalId = setInterval(nextRound, ROUND_DURATION);
+  });
+
+  tapBtn.addEventListener('click', handleTap);
+</script>
+</body>
+</html>
