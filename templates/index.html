@@ -12,6 +12,95 @@
 
     <!-- ✅ ADDED: Game Overlay CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/game_overlay.css') }}">
+
+    <style>
+    /* UDEMY-STYLE CURRICULUM CSS */
+    .curriculum-container {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: 15px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .course-section {
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .section-header {
+        width: 100%;
+        padding: 16px 20px;
+        background: #f8fafc;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        cursor: pointer;
+        color: #2d3748;
+        transition: background 0.2s;
+    }
+
+    .section-header:hover {
+        background: #edf2f7;
+    }
+
+    .section-content {
+        display: none;
+        background: #fff;
+    }
+
+    .section-content.active {
+        display: block;
+    }
+
+    .lesson-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        border-bottom: 1px solid #f1f5f9;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .lesson-item:hover {
+        background: #f0f7ff;
+    }
+
+    .play-icon {
+        margin-right: 12px;
+        font-size: 14px;
+        color: #4299e1;
+    }
+
+    .lesson-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lesson-name {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 500;
+        color: #4a5568;
+    }
+
+    .lesson-duration {
+        font-size: 11px;
+        color: #a0aec0;
+    }
+
+    .chevron {
+        font-size: 10px;
+        transition: transform 0.3s;
+    }
+
+    .active-section .chevron {
+        transform: rotate(180deg);
+    }
+    </style>
 </head>
 <body>
 
@@ -93,10 +182,6 @@
         </div>
     </header>
 
-    <!-- ALL YOUR ORIGINAL CONTENT BELOW REMAINS EXACTLY SAME -->
-
-
-
     <!-- Main Content -->
     <div class="content-wrapper">
         <!-- Dashboard Page -->
@@ -115,11 +200,11 @@
                         <span class="progress-text">45% Complete</span>
                     </div>
 
-                    <h2>{{ main_video.title if main_video else 'Marketing Data Analysis & Analytics' }}</h2>
+                    <h2 id="currentVideoTitle">{{ main_video.title if main_video else 'Marketing Data Analysis & Analytics' }}</h2>
                     
                     <div class="video-container">
-                        <iframe width="100%" height="100%"
-                                src="{{ main_video.url.replace('watch?v=', 'embed/') if main_video else 'https://www.youtube.com/embed/d8y8kc317EE' }}"
+                        <iframe id="mainVideoPlayer" width="100%" height="100%"
+                                src="{{ main_video.url.replace('watch?v=', 'embed/') if main_video else 'https://www.youtube.com/embed/DCocuETll0U?rel=0' }}"
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen>
@@ -128,13 +213,13 @@
 
                     <div class="desc">
                         <h3>Description:</h3>
-                        <p>{{ main_video.description if main_video else 'Learn essential marketing data analysis skills with interactive lessons designed for diverse learning styles. This course adapts to your pace and provides visual, auditory, and kinesthetic learning options.' }}</p>
+                        <p>{{ main_video.description if main_video else 'Learn essential skills with interactive lessons designed for diverse learning styles. This course adapts to your pace and provides visual, auditory, and kinesthetic learning options.' }}</p>
                     </div>
                 </div>
 
                 <div class="right-panel">
                     <div class="panel-header">
-                        <h2>{% if lessons %}8th Grade Lessons{% else %}Today's Lessons{% endif %}</h2>
+                        <h2>{% if lessons %}8th Grade Lessons{% else %}Course Content{% endif %}</h2>
                         <button class="btn btn-primary">✨ AI Helper</button>
                     </div>
                     
@@ -146,23 +231,95 @@
                         </div>
                     </div>
 
-                    <div class="lesson-list">
-                        {% if lessons %}
-                            {% for lesson in lessons %}
-                                <div class="lesson-card">
-                                    <a href="{{ lesson.url }}" target="_blank">
-                                        <b>{{ lesson.title }}</b>
-                                    </a>
-                                    <p>{{ lesson.description }}</p>
+                    <!-- ✅ UDEMY-STYLE CURRICULUM -->
+                    <div class="curriculum-container">
+
+                        <!-- Section 1: Crop Production and Management -->
+                        <div class="course-section">
+                            <button class="section-header" onclick="toggleSection('sec1')">
+                                <span>1. Crop Production and Management</span>
+                                <span class="chevron">▼</span>
+                            </button>
+                            <div id="sec1" class="section-content active">
+                                <div class="lesson-item" onclick="changeVideo('DCocuETll0U', 'Introduction to Crops')">
+                                    <span class="play-icon">▶</span>
+                                    <div class="lesson-info">
+                                        <p class="lesson-name">Introduction</p>
+                                        <span class="lesson-duration">04:12</span>
+                                    </div>
                                 </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="lesson-card">
-                                <h4>Lesson 1: Introduction to Data</h4>
-                                <p>Understand the basics of marketing analytics</p>
+                                <div class="lesson-item" onclick="changeVideo('C_e2I9SBsRY', 'Types of Crops')">
+                                    <span class="play-icon">▶</span>
+                                    <div class="lesson-info">
+                                        <p class="lesson-name">Types of Crops</p>
+                                        <span class="lesson-duration">08:45</span>
+                                    </div>
+                                </div>
+                                <div class="lesson-item" onclick="changeVideo('XqGxAB8hvno', 'Agricultural Practices')">
+                                    <span class="play-icon">▶</span>
+                                    <div class="lesson-info">
+                                        <p class="lesson-name">Practice of Crop Production</p>
+                                        <span class="lesson-duration">12:30</span>
+                                    </div>
+                                </div>
+                                <div class="lesson-item" onclick="changeVideo('SvtRwvnZuQ0', 'Irrigation Methods')">
+                                    <span class="play-icon">▶</span>
+                                    <div class="lesson-info">
+                                        <p class="lesson-name">Irrigation and Irrigation Methods</p>
+                                        <span class="lesson-duration">10:15</span>
+                                    </div>
+                                </div>
+                                <div class="lesson-item" onclick="changeVideo('I-XB7WjT3mI', 'Weed Protection')">
+                                    <span class="play-icon">▶</span>
+                                    <div class="lesson-info">
+                                        <p class="lesson-name">Protection from Weeds</p>
+                                        <span class="lesson-duration">07:50</span>
+                                    </div>
+                                </div>
+                                <div class="lesson-item" onclick="changeVideo('AZ2mjZokbxI', 'Harvesting and Storage')">
+                                    <span class="play-icon">▶</span>
+                                    <div class="lesson-info">
+                                        <p class="lesson-name">Harvesting, Winnowing, Storage & Animal Husbandry</p>
+                                        <span class="lesson-duration">15:20</span>
+                                    </div>
+                                </div>
+                                <div class="lesson-item" onclick="changeVideo('flXjMArTZW8', 'Important Terms Summary')">
+                                    <span class="play-icon">▶</span>
+                                    <div class="lesson-info">
+                                        <p class="lesson-name">Important Terms Summary</p>
+                                        <span class="lesson-duration">05:40</span>
+                                    </div>
+                                </div>
                             </div>
-                        {% endif %}
+                        </div>
+
+                        <!-- Section 2: Microorganisms -->
+                        <div class="course-section">
+                            <button class="section-header" onclick="toggleSection('sec2')">
+                                <span>2. Microorganisms: Friend and Foe</span>
+                                <span class="chevron">▼</span>
+                            </button>
+                            <div id="sec2" class="section-content">
+                                <div class="lesson-item" onclick="changeVideo('YIjScnIcZgE', 'Microorganism, Bacteria, Algae, Fungi & Protozoa')">
+                                    <span class="play-icon">▶</span>
+                                    <div class="lesson-info">
+                                        <p class="lesson-name">Microorganism, Bacteria, Algae, Fungi & Protozoa</p>
+                                        <span class="lesson-duration">12:30</span>
+                                    </div>
+                                </div>
+                                <div class="lesson-item" onclick="changeVideo('sypDCS3tpWM', 'Viruses & Microorganisms')">
+                                    <span class="play-icon">▶</span>
+                                    <div class="lesson-info">
+                                        <p class="lesson-name">Viruses & Microorganisms</p>
+                                        <span class="lesson-duration">15:10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                    <!-- END CURRICULUM -->
+
                 </div>
             </div>
         </div>
@@ -292,11 +449,6 @@
         </div>
     </div>
 
-
-
-
-    <!-- (I DID NOT TOUCH YOUR DASHBOARD, RESOURCES, PROFILE, LESSONS, PROGRESS, CAMERA, FOOTER ETC.) -->
-
     <!-- Game Overlay -->
     <div id="game-overlay">
         <div id="game-container">
@@ -356,13 +508,13 @@
         </div>
     </footer>
 
+    <!-- ✅ ALL ORIGINAL SCRIPTS UNTOUCHED -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/idle_detector.js') }}"></script>
 
-    <!-- ✅ ADDED: iframe communication handler -->
+    <!-- ✅ iframe communication handler (original) -->
     <script>
     window.addEventListener("message", function(event) {
-
         if (!event.data || !event.data.type) return;
 
         if (event.data.type === "game_started") {
@@ -381,6 +533,43 @@
             fetch("/log_game_result", { method: "POST" });
         }
     });
+    </script>
+
+    <!-- ✅ NEW: Curriculum Video + Accordion Logic -->
+    <script>
+    // Switch the main video player to the selected lesson
+    function changeVideo(videoId, title) {
+        const player = document.getElementById('mainVideoPlayer');
+        // youtube-nocookie avoids most embed restriction errors
+        player.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`;
+
+        const titleEl = document.getElementById('currentVideoTitle');
+        if (titleEl && title) {
+            titleEl.innerText = title;
+        }
+    }
+
+    // Udemy-style accordion: clicking a section header toggles it open/closed
+    function toggleSection(id) {
+        const content = document.getElementById(id);
+        const header = content.previousElementSibling;
+
+        const isActive = content.classList.contains('active');
+
+        // Close all sections first
+        document.querySelectorAll('.section-content').forEach(function(s) {
+            s.classList.remove('active');
+        });
+        document.querySelectorAll('.section-header').forEach(function(h) {
+            h.parentElement.classList.remove('active-section');
+        });
+
+        // If the clicked section wasn't active, open it
+        if (!isActive) {
+            content.classList.add('active');
+            header.parentElement.classList.add('active-section');
+        }
+    }
     </script>
 
 </body>
